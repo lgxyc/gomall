@@ -15,3 +15,6 @@ gen-demo-thrift:
 	--module github.com/lgxyc/gomall/demo/demo_thrift \
 	--service demo_thrift \
 	--idl ../../idl/echo.thrift
+.PHONY: demo_proto
+demo_proto:
+	@cd demo/demo_proto && go work use . && go run .

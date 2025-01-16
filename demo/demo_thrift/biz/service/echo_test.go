@@ -2,8 +2,9 @@ package service
 
 import (
 	"context"
-	api "github.com/lgxyc/gomall/demo/demo_thrift/kitex_gen/api"
 	"testing"
+
+	api "github.com/lgxyc/gomall/demo/demo_thrift/kitex_gen/api"
 )
 
 func TestEcho_Run(t *testing.T) {
@@ -15,7 +16,6 @@ func TestEcho_Run(t *testing.T) {
 	resp, err := s.Run(req)
 	t.Logf("err: %v", err)
 	t.Logf("resp: %v", resp)
-
 	// todo: edit your unit test
 
 }
