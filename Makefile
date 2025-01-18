@@ -16,5 +16,11 @@ gen-demo-thrift:
 	--service demo_thrift \
 	--idl ../../idl/echo.thrift
 .PHONY: demo_proto
-demo_proto:
-	@cd demo/demo_proto && go work use . && go run .
+
+
+.PHONY: gen-frontend
+gen-frontend:
+	@cd app/frontend && \
+	cwgo server --type HTTP --idl ../../idl/frontend/home.proto --service frontend -module github.com/lgxyc/gomall/app/frontend -I ../../idl
+
+	
