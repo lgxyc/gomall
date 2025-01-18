@@ -8,6 +8,7 @@ import (
 	"github.com/hertz-contrib/sessions"
 	auth "github.com/lgxyc/gomall/app/frontend/hertz_gen/frontend/auth"
 	common "github.com/lgxyc/gomall/app/frontend/hertz_gen/frontend/common"
+	"github.com/lgxyc/gomall/app/frontend/middleware"
 )
 
 type RegisterService struct {
@@ -20,13 +21,8 @@ func NewRegisterService(Context context.Context, RequestContext *app.RequestCont
 }
 
 func (h *RegisterService) Run(req *auth.RegisterReq) (resp *common.Empty, err error) {
-	//defer func() {
-	// hlog.CtxInfof(h.Context, "req = %+v", req)
-	// hlog.CtxInfof(h.Context, "resp = %+v", resp)
-	//}()
-	// todo edit your code
 	sessions := sessions.Default(h.RequestContext)
-	sessions.Set("user_id", 1)
+	sessions.Set(middleware.SessionUserId, 1)
 	if err = sessions.Save(); err != nil {
 		log.Fatal(err)
 	}
