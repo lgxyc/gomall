@@ -4,6 +4,7 @@ package main
 
 import (
 	"context"
+	"os"
 	"time"
 
 	"github.com/cloudwego/hertz/pkg/app"
@@ -12,11 +13,15 @@ import (
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/cloudwego/hertz/pkg/common/utils"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
+	"github.com/hertz-contrib/sessions/redis"
+	"github.com/joho/godotenv"
+
 	"github.com/hertz-contrib/cors"
 	"github.com/hertz-contrib/gzip"
 	"github.com/hertz-contrib/logger/accesslog"
 	hertzlogrus "github.com/hertz-contrib/logger/logrus"
 	"github.com/hertz-contrib/pprof"
+	"github.com/hertz-contrib/sessions"
 	"github.com/lgxyc/gomall/app/frontend/biz/router"
 	"github.com/lgxyc/gomall/app/frontend/conf"
 	"go.uber.org/zap/zapcore"
@@ -24,6 +29,10 @@ import (
 )
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		panic(err)
+	}
 	// init dal
 	// dal.Init()
 	address := conf.GetConf().Hertz.Address
@@ -40,13 +49,19 @@ func main() {
 	h.LoadHTMLGlob("template/*")
 	h.Static("/static", "./")
 	h.GET("/sign-in", func(c context.Context, ctx *app.RequestContext) {
-		ctx.HTML(consts.StatusOK, "sign-in", utils.H{"Title": "Sign In"})
+		ctx.HTML(consts.StatusOK, "sign-in", nil)
+	})
+	h.GET("/sign-up", func(c context.Context, ctx *app.RequestContext) {
+		ctx.HTML(consts.StatusOK, "sign-up", nil)
 	})
 
 	h.Spin()
 }
 
 func registerMiddleware(h *server.Hertz) {
+	store, _ := redis.NewStore(10, "tcp", conf.GetConf().Redis.Address, conf.GetConf().Redis.Password, []byte(os.Getenv("SESSION_SECRET")))
+
+	h.Use(sessions.New("cloudwego-shop", store))
 	// log
 	logger := hertzlogrus.NewLogger()
 	hlog.SetLogger(logger)
