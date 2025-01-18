@@ -2,10 +2,8 @@
 syntax = "proto3";
 
 package user;
-option go_package = /user";
+option go_package = "/user";
 
-import "common.proto";
-import "api.proto";
 
 message RegisterReq{
     string email =1;

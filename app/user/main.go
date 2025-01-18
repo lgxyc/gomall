@@ -6,11 +6,10 @@ import (
 
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
-	"github.com/cloudwego/kitex/pkg/transmeta"
 	"github.com/cloudwego/kitex/server"
 	kitexlogrus "github.com/kitex-contrib/obs-opentelemetry/logging/logrus"
-	"github.com/lgxyc/gomall/demo/demo_thrift/conf"
-	"github.com/lgxyc/gomall/demo/demo_thrift/kitex_gen/api/echo"
+	"github.com/lgxyc/gomall/app/user/conf"
+	"github.com/lgxyc/gomall/rpc_gen/kitex_gen/user/userservice"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
@@ -18,7 +17,7 @@ import (
 func main() {
 	opts := kitexInit()
 
-	svr := echo.NewServer(new(EchoImpl), opts...)
+	svr := userservice.NewServer(new(UserServiceImpl), opts...)
 
 	err := svr.Run()
 	if err != nil {
@@ -38,8 +37,6 @@ func kitexInit() (opts []server.Option) {
 	opts = append(opts, server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{
 		ServiceName: conf.GetConf().Kitex.Service,
 	}))
-	// thrift meta handler
-	opts = append(opts, server.WithMetaHandler(transmeta.ServerTTHeaderHandler))
 
 	// klog
 	logger := kitexlogrus.NewLogger()

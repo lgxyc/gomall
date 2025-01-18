@@ -9,13 +9,13 @@ gen-demo-proto:
 
 .PHONY: gen-demo-thrift
 gen-demo-thrift:
-	@cd demo/demo_thrift &&
-	cwgo server 
-	--type rpc\
+	@cd demo/demo_thrift && \
+	cwgo server -I ../../idl \
+	--type rpc \
 	--module github.com/lgxyc/gomall/demo/demo_thrift \
 	--service demo_thrift \
 	--idl ../../idl/echo.thrift
-.PHONY: demo_proto
+
 
 .PHONY: app-frontend-fix
 app-frontend-fix:
@@ -39,14 +39,23 @@ gen-frontend-home:
 	-module github.com/lgxyc/gomall/app/frontend \
 	-I ../../idl
 
-.PHONY: gen-rpc-gen-user
-gen-rpc-gen-user:
-	@cd rpc_gen && \
+.PHONY: gen-rpc-gen_user-client
+gen-rpc-gen-user-client:
+	@cd  rpc_gen && \
 	cwgo client -I ../idl \
-	--type rpc \
-	--module github.com/lgxyc/gomall/rpc_gen \
+	--type rpc  \
+	--module github.com/lgxyc/gomall/rec_gen \
 	--service user \
-	--idl ../idl/user.proto 
+	--idl ../idl/user.proto
 	
+.PHONY: gen-rpc-gen_user-server
+gen-rpc-gen-user-server:
+	@cd app/user && \
+	cwgo server --type rpc \
+	--idl ../../idl/user.proto \
+	--service user \
+	--module github.com/lgxyc/gomall/app/user \
+	-I ../../idl \
+	--pass "-use github.com/lgxyc/gomall/rpc_gen/kitex_gen"
 
 	
