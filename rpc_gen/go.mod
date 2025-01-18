@@ -1,4 +1,4 @@
-module github.com/lgxyc/gomall/rec_gen
+module github.com/lgxyc/gomall/rpc_gen
 
 go 1.23.4
 

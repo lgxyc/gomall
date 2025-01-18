@@ -2,9 +2,9 @@ package user
 
 import (
 	"context"
-	user "github.com/lgxyc/gomall/rec_gen/kitex_gen/user"
+	user "github.com/lgxyc/gomall/rpc_gen/kitex_gen/user"
 
-	"github.com/lgxyc/gomall/rec_gen/kitex_gen/user/userservice"
+	"github.com/lgxyc/gomall/rpc_gen/kitex_gen/user/userservice"
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/client/callopt"
 )

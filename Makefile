@@ -44,7 +44,7 @@ gen-rpc-gen-user-client:
 	@cd  rpc_gen && \
 	cwgo client -I ../idl \
 	--type rpc  \
-	--module github.com/lgxyc/gomall/rec_gen \
+	--module github.com/lgxyc/gomall/rpc_gen \
 	--service user \
 	--idl ../idl/user.proto
 	
