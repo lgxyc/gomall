@@ -2,10 +2,10 @@ package auth
 
 import (
 	"context"
-	"log"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
+	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/lgxyc/gomall/app/frontend/biz/service"
 	"github.com/lgxyc/gomall/app/frontend/biz/utils"
 	auth "github.com/lgxyc/gomall/app/frontend/hertz_gen/frontend/auth"
@@ -64,7 +64,7 @@ func Logout(ctx context.Context, c *app.RequestContext) {
 
 	_, err = service.NewLogoutService(ctx, c).Run(&req)
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	c.Redirect(consts.StatusOK, []byte("/"))
 }

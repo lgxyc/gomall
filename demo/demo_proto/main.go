@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net"
 	"time"
 
@@ -51,7 +50,7 @@ func kitexInit() (opts []server.Option) {
 	// 初始化consul
 	r, err := consul.NewConsulRegister(conf.GetConf().Registry.RegistryAddress[0])
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	// 配置设置到服务启动参数中
 	opts = append(opts, server.WithRegistry(r))

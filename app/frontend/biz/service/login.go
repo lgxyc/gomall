@@ -2,12 +2,11 @@ package service
 
 import (
 	"context"
-	"log"
 
 	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/hertz-contrib/sessions"
 	auth "github.com/lgxyc/gomall/app/frontend/hertz_gen/frontend/auth"
-	"github.com/lgxyc/gomall/app/frontend/middleware"
 )
 
 type LoginService struct {
@@ -21,9 +20,9 @@ func NewLoginService(Context context.Context, RequestContext *app.RequestContext
 
 func (h *LoginService) Run(req *auth.LoginReq) (redirect string, err error) {
 	session := sessions.Default(h.RequestContext)
-	session.Set(middleware.SessionUserId, 1)
+	session.Set("user_id", 1)
 	if err = session.Save(); err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	// 返回上一级页面
 	redirect = "/"

@@ -17,18 +17,35 @@ gen-demo-thrift:
 	--idl ../../idl/echo.thrift
 .PHONY: demo_proto
 
-.PHONY: gen-link-fix
-demo-link-fix:
-	@cd demo/demo_proto && golanci-lint run -E gofumpt --path-prefix=. --fix --timeout=5m
+.PHONY: app-frontend-fix
+app-frontend-fix:
+	@cd app/frontend && golanci-lint run -E gofumpt --path-prefix=. --fix --timeout=5m
 
 .PHONY: gen-frontend-auth
 gen-frontend-auth:
 	@cd app/frontend && \
-	cwgo server --type HTTP --idl ../../idl/frontend/auth.proto --service frontend -module github.com/lgxyc/gomall/app/frontend -I ../../idl
+	cwgo server --type HTTP \
+	--idl ../../idl/frontend/auth.proto \
+	--service frontend \
+	-module github.com/lgxyc/gomall/app/frontend \
+	-I ../../idl
 
 .PHONY: gen-frontend-home
 gen-frontend-home:
 	@cd app/frontend && \
-	cwgo server --type HTTP --idl ../../idl/frontend/home.proto --service frontend -module github.com/lgxyc/gomall/app/frontend -I ../../idl
+	cwgo server --type HTTP \
+	--idl ../../idl/frontend/home.proto \
+	--service frontend \
+	-module github.com/lgxyc/gomall/app/frontend \
+	-I ../../idl
+
+.PHONY: gen-rpc-gen-user
+gen-rpc-gen-user:
+	@ cd rpc_gen && \
+	cwgo server --type RPC \
+	--idl ../idl/user.proto \
+	--service user \
+	-module github.com/lgxyc/gomall/rpc-gen  \
+	-I ../idl
 
 	

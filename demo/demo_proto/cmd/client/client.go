@@ -4,11 +4,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
 
 	"github.com/bytedance/gopkg/cloud/metainfo"
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/pkg/kerrors"
+	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/cloudwego/kitex/pkg/transmeta"
 	"github.com/cloudwego/kitex/transport"
 	consul "github.com/kitex-contrib/registry-consul"
@@ -20,7 +20,7 @@ import (
 func main() {
 	r, err := consul.NewConsulResolver("127.0.0.1:8500")
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	// 客户端集成自定义 middleware
 	// client.WithMiddleware
@@ -28,7 +28,7 @@ func main() {
 		client.WithMetaHandler(transmeta.ClientHTTP2Handler),
 		client.WithMiddleware(middleware.Middleware))
 	if err != nil {
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 
 	// withValue 只传递给下个服务,不传递给下下个服务
@@ -46,7 +46,7 @@ func main() {
 		if ok {
 			fmt.Printf("%#v", bizErr)
 		}
-		log.Fatal(err)
+		klog.Fatal(err)
 	}
 	fmt.Printf("%v", res)
 }
