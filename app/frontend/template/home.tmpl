@@ -1,64 +1,16 @@
+{{define "home"}}
 {{template "header" .}}
-<div class="row">
-    <div class="card col-xl-3 col-lg-4 col-md-6 col-sm-12 p-5 border-0">
-        <img src=" /static/image/t-shirt-1.jpeg" class="card-img-top " alt="...">
-        <div class="card-body">
-            <h5 class="card-title">T shirt 1</h5>
-            <p class="card-text">$100</p>
+    <div class="row">
+    {{range .Items}}
+        <div class="card col-xl-3 col-lg-4 col-md-6 col-sm-12 p-5 border-0">
+            <img src="{{.Picture}}" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{ .Name}}</h5>
+                <p class="card-text">{{ .Price}}</p>
+            </div>
         </div>
-    </div>
-    <div class="card col-xl-3 col-lg-4 col-md-6 col-sm-12 p-5 border-0">
-        <img src=" /static/image/t-shirt-2.jpeg" class="card-img-top " alt="...">
-        <div class="card-body">
-            <h5 class="card-title">T shirt 2</h5>
-            <p class="card-text">$100</p>
-        </div>
-    </div>
-    <div class="card col-xl-3 col-lg-4 col-md-6 col-sm-12 p-5 border-0">
-        <img src=" /static/image/t-shirt-2.jpeg" class="card-img-top " alt="...">
-        <div class="card-body">
-            <h5 class="card-title">T shirt 2</h5>
-            <p class="card-text">$100</p>
-        </div>
-    </div>
-    <div class="card col-xl-3 col-lg-4 col-md-6 col-sm-12 p-5 border-0">
-        <img src=" /static/image/t-shirt-2.jpeg" class="card-img-top " alt="...">
-        <div class="card-body">
-            <h5 class="card-title">T shirt 2</h5>
-            <p class="card-text">$100</p>
-        </div>
-    </div>
-    <div class="card col-xl-3 col-lg-4 col-md-6 col-sm-12 p-5 border-0">
-        <img src=" /static/image/t-shirt-2.jpeg" class="card-img-top " alt="...">
-        <div class="card-body">
-            <h5 class="card-title">T shirt 2</h5>
-            <p class="card-text">$100</p>
-        </div>
-    </div>
-    <div class="card col-xl-3 col-lg-4 col-md-6 col-sm-12 p-5 border-0">
-        <img src=" /static/image/t-shirt-2.jpeg" class="card-img-top " alt="...">
-        <div class="card-body">
-            <h5 class="card-title">T shirt 2</h5>
-            <p class="card-text">$100</p>
-        </div>
-    </div>
-    <div class="card col-xl-3 col-lg-4 col-md-6 col-sm-12 p-5 border-0">
-        <img src=" /static/image/t-shirt-2.jpeg" class="card-img-top " alt="...">
-        <div class="card-body">
-            <h5 class="card-title">T shirt 2</h5>
-            <p class="card-text">$100</p>
-        </div>
-    </div>
-    <div class="card col-xl-3 col-lg-4 col-md-6 col-sm-12 p-5 border-0">
-        <img src=" /static/image/t-shirt-2.jpeg" class="card-img-top " alt="...">
-        <div class="card-body">
-            <h5 class="card-title">T shirt 2</h5>
-            <p class="card-text">$100</p>
-        </div>
+    {{end}}
     </div>
 
-
-
-</div>
-
-{{template "footer" .}}
+{{template "footer"}}
+{{end}}

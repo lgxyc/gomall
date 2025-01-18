@@ -1,0 +1,31 @@
+{{define "sign-in"}}
+{{template "header" . }}
+
+<div class="row justify-content-center">
+    <div class="col-4">
+        <form method="post" action="/auth/login">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address {{template "require"}}</label>
+                <input type="email" class="form-control" id="email">
+
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password
+                    {{template "require"}}
+                </label>
+                <input type="password" class="form-control" id="password">
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            </div>
+            <div class="mb-3">
+                Don't hava account,click here to <a href="" /sign-up>Sign Up</a>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+</div>
+{{template "footer" . }}
+{{end}}

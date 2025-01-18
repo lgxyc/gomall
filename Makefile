@@ -21,8 +21,13 @@ gen-demo-thrift:
 demo-link-fix:
 	@cd demo/demo_proto && golanci-lint run -E gofumpt --path-prefix=. --fix --timeout=5m
 
-.PHONY: gen-frontend
-gen-frontend:
+.PHONY: gen-frontend-auth
+gen-frontend-auth:
+	@cd app/frontend && \
+	cwgo server --type HTTP --idl ../../idl/frontend/auth.proto --service frontend -module github.com/lgxyc/gomall/app/frontend -I ../../idl
+
+.PHONY: gen-frontend-home
+gen-frontend-home:
 	@cd app/frontend && \
 	cwgo server --type HTTP --idl ../../idl/frontend/home.proto --service frontend -module github.com/lgxyc/gomall/app/frontend -I ../../idl
 

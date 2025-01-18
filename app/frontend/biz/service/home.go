@@ -16,11 +16,24 @@ func NewHomeService(Context context.Context, RequestContext *app.RequestContext)
 	return &HomeService{RequestContext: RequestContext, Context: Context}
 }
 
-func (h *HomeService) Run(req *home.Empty) (resp *home.Empty, err error) {
+func (h *HomeService) Run(req *home.Empty) (map[string]any, error) {
 	//defer func() {
 	// hlog.CtxInfof(h.Context, "req = %+v", req)
 	// hlog.CtxInfof(h.Context, "resp = %+v", resp)
 	//}()
 	// todo edit your code
-	return
+
+	resp := make(map[string]any)
+
+	items := []map[string]any{
+		{"Name": "T-shirt", "Price": 100, "Picture": "/static/image/t-shirt-1.jpeg"},
+		{"Name": "T-shirt-2", "Price": 200, "Picture": "/static/image/t-shirt-2.jpeg"},
+		{"Name": "T-shirt", "Price": 300, "Picture": "/static/image/t-shirt-1.jpeg"},
+		{"Name": "T-shirt", "Price": 100, "Picture": "/static/image/t-shirt-1.jpeg"},
+		{"Name": "T-shirt", "Price": 100, "Picture": "/static/image/t-shirt-1.jpeg"},
+		{"Name": "T-shirt", "Price": 100, "Picture": "/static/image/t-shirt-1.jpeg"},
+	}
+	resp["Title"] = "Hot Sales"
+	resp["Items"] = items
+	return resp, nil
 }
