@@ -24,6 +24,7 @@ import (
 	"github.com/hertz-contrib/sessions"
 	"github.com/lgxyc/gomall/app/frontend/biz/router"
 	"github.com/lgxyc/gomall/app/frontend/conf"
+	"github.com/lgxyc/gomall/app/frontend/middleware"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
@@ -49,7 +50,11 @@ func main() {
 	h.LoadHTMLGlob("template/*")
 	h.Static("/static", "./")
 	h.GET("/sign-in", func(c context.Context, ctx *app.RequestContext) {
-		ctx.HTML(consts.StatusOK, "sign-in", nil)
+		data := utils.H{
+			"Ttile": "Sign In",
+			"Next":  ctx.Request.Header.Get("Referer"),
+		}
+		ctx.HTML(consts.StatusOK, "sign-in", data)
 	})
 	h.GET("/sign-up", func(c context.Context, ctx *app.RequestContext) {
 		ctx.HTML(consts.StatusOK, "sign-up", nil)
@@ -100,4 +105,5 @@ func registerMiddleware(h *server.Hertz) {
 
 	// cores
 	h.Use(cors.Default())
+	middleware.Register(h)
 }

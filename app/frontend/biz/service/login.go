@@ -7,7 +7,6 @@ import (
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/hertz-contrib/sessions"
 	auth "github.com/lgxyc/gomall/app/frontend/hertz_gen/frontend/auth"
-	common "github.com/lgxyc/gomall/app/frontend/hertz_gen/frontend/common"
 )
 
 type LoginService struct {
@@ -19,12 +18,17 @@ func NewLoginService(Context context.Context, RequestContext *app.RequestContext
 	return &LoginService{RequestContext: RequestContext, Context: Context}
 }
 
-func (h *LoginService) Run(req *auth.LoginReq) (resp *common.Empty, err error) {
+func (h *LoginService) Run(req *auth.LoginReq) (redirect string, err error) {
 	session := sessions.Default(h.RequestContext)
 	session.Set("user_id", 1)
 	err = session.Save()
 	if err != nil {
 		log.Fatal(err)
 	}
-	return
+	// 返回上一级页面
+	redirect = "/"
+	if req.Next != "" {
+		redirect = req.Next
+	}
+	return redirect, err
 }

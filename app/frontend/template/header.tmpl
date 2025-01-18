@@ -14,7 +14,7 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
+            <div class="container">
                 <img class="navbar-brand" src="static/image/logo.jpg" alt="cloudWeGo" style="height: 3em">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -53,8 +53,26 @@
                         <i class="fa-solid fa-cart-shopping fa-xl"></i>
                     </div>
                     {{ if .user_id}}
-                    <div class="ms-3">
-                        <i class="fa-solid fa-user fa-xl"></i>
+                    <div class="dropdown">
+
+                        <div class="ms-3 dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="fa-solid fa-user fa-xl"></i>
+                            <span>Hello</span>
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="#">Order Center</a>
+                            </li>
+                            <li>
+                                <form action="/auth/logout" method="post">
+                                    <button type="submit" class="dropdown-item">Logout</a>
+                                </form>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Setting</a>
+                            </li>
+
+                        </ul>
                     </div>
                     {{else}}
                     <div class="ms-3">
