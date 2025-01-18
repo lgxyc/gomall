@@ -17,6 +17,9 @@ gen-demo-thrift:
 	--idl ../../idl/echo.thrift
 .PHONY: demo_proto
 
+.PHONY: gen-link-fix
+demo-link-fix:
+	@cd demo/demo_proto && golanci-lint run -E gofumpt --path-prefix=. --fix --timeout=5m
 
 .PHONY: gen-frontend
 gen-frontend:
