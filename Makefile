@@ -41,11 +41,12 @@ gen-frontend-home:
 
 .PHONY: gen-rpc-gen-user
 gen-rpc-gen-user:
-	@ cd rpc_gen && \
-	cwgo server --type RPC \
-	--idl ../idl/user.proto \
+	@cd rpc_gen && \
+	cwgo client -I ../idl \
+	--type rpc \
+	--module github.com/lgxyc/gomall/rpc_gen \
 	--service user \
-	-module github.com/lgxyc/gomall/rpc-gen  \
-	-I ../idl
+	--idl ../idl/user.proto 
+	
 
 	
