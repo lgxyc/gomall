@@ -17,5 +17,5 @@ service CategoryService {
 
 
 message CategoryReq{
-    uint32 category = 1 [(api.path) = "category"];
+    string category = 1 [(api.path) = "category"];
 }

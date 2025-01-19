@@ -64,6 +64,17 @@ func main() {
 	h.GET("/about", middleware.Auth(), func(c context.Context, ctx *app.RequestContext) {
 		ctx.HTML(consts.StatusOK, "about", nil)
 	})
+	h.GET("/redirect", func(ctx context.Context, c *app.RequestContext) {
+		c.HTML(consts.StatusOK, "about", utils.H{
+			"title": "Error",
+		})
+	})
+	if os.Getenv("GO_ENV") != "online" {
+		h.GET("/robots.txt", func(ctx context.Context, c *app.RequestContext) {
+			c.Data(consts.StatusOK, "text/plain", []byte(`User-agent: *
+Disallow: /`))
+		})
+	}
 
 	h.Spin()
 }

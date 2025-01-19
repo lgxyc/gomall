@@ -6,7 +6,6 @@ import (
 	"github.com/cloudwego/kitex/client"
 	consul "github.com/kitex-contrib/registry-consul"
 	"github.com/lgxyc/gomall/app/frontend/conf"
-	"github.com/lgxyc/gomall/app/frontend/utils"
 	frontendutils "github.com/lgxyc/gomall/app/frontend/utils"
 	"github.com/lgxyc/gomall/rpc_gen/kitex_gen/product/productcatalogservice"
 	"github.com/lgxyc/gomall/rpc_gen/kitex_gen/user/userservice"
@@ -28,10 +27,10 @@ func Init() {
 func initUserClient() {
 	var opts []client.Option
 	r, err := consul.NewConsulResolver(conf.GetConf().Hertz.RegistryAddr)
-	utils.MustHandleError(err)
+	frontendutils.MustHandleError(err)
 	opts = append(opts, client.WithResolver(r))
 	UserClient, err = userservice.NewClient("user", opts...)
-	utils.MustHandleError(err)
+	frontendutils.MustHandleError(err)
 }
 
 func initProductClient() {

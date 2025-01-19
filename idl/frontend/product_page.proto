@@ -23,5 +23,5 @@ message ProductReq{
     uint32 id = 1 [(api.query) = "id"];
 }
 message SearchProductListReq{
-    uint32 query = 1 [(api.query) = "query"];
+    string query = 1 [(api.query) = "query"];
 }

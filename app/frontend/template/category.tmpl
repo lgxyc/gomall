@@ -1,7 +1,7 @@
 {{ define "category" }}
-{{ template "header" . }}
+{{template "header" .}}
 <div class="row">
-    {{ range $.items}}
+    {{ range $.Items}}
     <div class="card border-0 col-lg-4 col-md-6 col-sm-12 p-1">
         <a href="/product?id={{ .Id }}" class="btn">
             <div class="card-body row">
@@ -18,5 +18,6 @@
     </div>
     {{ end}}
 </div>
-{{ template "footer" . }}
-{{ end }}
+
+{{template "footer"}}
+{{end}}

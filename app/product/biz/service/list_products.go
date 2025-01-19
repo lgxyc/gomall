@@ -24,9 +24,10 @@ func (s *ListProductsService) Run(req *product.ListProductsReq) (resp *product.L
 		return nil, err
 	}
 	// db model -> rpc model
+	var productList []*product.Product
 	for _, vl := range cList {
 		for _, v := range vl.ProductList {
-			resp.ProductList = append(resp.ProductList, &product.Product{
+			productList = append(productList, &product.Product{
 				Id:          uint32(v.ID),
 				Name:        v.Name,
 				Description: v.Description,
@@ -35,5 +36,5 @@ func (s *ListProductsService) Run(req *product.ListProductsReq) (resp *product.L
 			})
 		}
 	}
-	return resp, nil
+	return &product.ListProductsResp{ProductList: productList}, nil
 }
