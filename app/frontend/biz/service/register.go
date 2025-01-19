@@ -4,10 +4,11 @@ import (
 	"context"
 
 	"github.com/cloudwego/hertz/pkg/app"
-	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/hertz-contrib/sessions"
 	auth "github.com/lgxyc/gomall/app/frontend/hertz_gen/frontend/auth"
 	common "github.com/lgxyc/gomall/app/frontend/hertz_gen/frontend/common"
+	"github.com/lgxyc/gomall/app/frontend/infra/rpc"
+	"github.com/lgxyc/gomall/rpc_gen/kitex_gen/user"
 )
 
 type RegisterService struct {
@@ -20,10 +21,19 @@ func NewRegisterService(Context context.Context, RequestContext *app.RequestCont
 }
 
 func (h *RegisterService) Run(req *auth.RegisterReq) (resp *common.Empty, err error) {
+	registerResp, err := rpc.UserClient.Register(h.Context,
+		&user.RegisterReq{
+			Email:           req.Email,
+			Password:        req.Password,
+			PasswordConfirm: req.PasswordConfirm,
+		})
+	if err != nil {
+		return nil, err
+	}
 	sessions := sessions.Default(h.RequestContext)
-	sessions.Set("user_id", 1)
+	sessions.Set("user_id", registerResp.UserId)
 	if err = sessions.Save(); err != nil {
-		klog.Fatal(err)
+		return nil, err
 	}
 	return nil, err
 }

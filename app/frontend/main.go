@@ -24,6 +24,7 @@ import (
 	"github.com/hertz-contrib/sessions"
 	"github.com/lgxyc/gomall/app/frontend/biz/router"
 	"github.com/lgxyc/gomall/app/frontend/conf"
+	"github.com/lgxyc/gomall/app/frontend/infra/rpc"
 	"github.com/lgxyc/gomall/app/frontend/middleware"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
@@ -36,6 +37,7 @@ func main() {
 	}
 	// init dal
 	// dal.Init()
+	rpc.Init()
 	address := conf.GetConf().Hertz.Address
 	h := server.New(server.WithHostPorts(address))
 

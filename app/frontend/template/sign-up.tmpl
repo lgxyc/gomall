@@ -3,23 +3,23 @@
 
 <div class="row justify-content-center">
     <div class="col-4">
-        <form method="post" action="/auth/register">
+        <form action="/auth/register" method="post">
             <div class="mb-3">
                 <label for="email" class="form-label">Email address {{template "require"}}</label>
-                <input type="email" class="form-control" id="email">
+                <input type="email" class="form-control" id="email" name="email">
 
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password
                     {{template "require"}}
                 </label>
-                <input type="password" class="form-control" id="password">
+                <input type="password" class="form-control" id="password" name="password">
             </div>
             <div class="mb-3">
-                <label for="password" class="form-label">Password Confirm
+                <label for="password_confirm" class="form-label">Password Confirm
                     {{template "require"}}
                 </label>
-                <input type="password" class="form-control" id="password_confirm">
+                <input type="password" class="form-control" id="password_confirm" name="password_confirm">
             </div>
             <div class="mb-3 form-check">
                 <input type="checkbox" class="form-check-input" id="exampleCheck1">

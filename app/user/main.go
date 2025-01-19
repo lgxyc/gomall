@@ -10,6 +10,7 @@ import (
 	"github.com/joho/godotenv"
 	kitexlogrus "github.com/kitex-contrib/obs-opentelemetry/logging/logrus"
 	consul "github.com/kitex-contrib/registry-consul"
+	"github.com/lgxyc/gomall/app/user/biz/dal"
 	"github.com/lgxyc/gomall/app/user/conf"
 	"github.com/lgxyc/gomall/rpc_gen/kitex_gen/user/userservice"
 	"go.uber.org/zap/zapcore"
@@ -20,8 +21,10 @@ func main() {
 	// 加载 .env 到环境变量中
 	err := godotenv.Load()
 	if err != nil {
+		klog.Error(err.Error())
 		panic(err)
 	}
+	dal.Init()
 	opts := kitexInit()
 
 	svr := userservice.NewServer(new(UserServiceImpl), opts...)

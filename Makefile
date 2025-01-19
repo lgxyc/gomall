@@ -1,9 +1,11 @@
+export REPO=github.com/lgxyc/gomall
+
 .PHONY: gen-demo-proto
 gen-demo-proto:
 	@cd  demo/demo_proto && \
 	cwgo server -I ../../idl \
 	--type rpc  \
-	--module github.com/lgxyc/gomall/demo/demo_proto \
+	--module ${REPO}/demo/demo_proto \
 	--service demo_proto \
 	--idl ../../idl/echo.proto
 
@@ -12,7 +14,7 @@ gen-demo-thrift:
 	@cd demo/demo_thrift && \
 	cwgo server -I ../../idl \
 	--type rpc \
-	--module github.com/lgxyc/gomall/demo/demo_thrift \
+	--module ${REPO}/demo/demo_thrift \
 	--service demo_thrift \
 	--idl ../../idl/echo.thrift
 
@@ -21,41 +23,51 @@ gen-demo-thrift:
 app-frontend-fix:
 	@cd app/frontend && golanci-lint run -E gofumpt --path-prefix=. --fix --timeout=5m
 
-.PHONY: gen-frontend-auth
-gen-frontend-auth:
-	@cd app/frontend && \
-	cwgo server --type HTTP \
-	--idl ../../idl/frontend/auth.proto \
-	--service frontend \
-	-module github.com/lgxyc/gomall/app/frontend \
-	-I ../../idl
 
-.PHONY: gen-frontend-home
-gen-frontend-home:
+.PHONY: gen-frontend
+gen-frontend:
 	@cd app/frontend && \
 	cwgo server --type HTTP \
 	--idl ../../idl/frontend/home.proto \
 	--service frontend \
-	-module github.com/lgxyc/gomall/app/frontend \
+	-module ${REPO}/app/frontend \
+	-I ../../idl
+	@cd app/frontend && \
+	cwgo server --type HTTP \
+	--idl ../../idl/frontend/auth.proto \
+	--service frontend \
+	-module ${REPO}/app/frontend \
 	-I ../../idl
 
-.PHONY: gen-rpc-gen_user-client
-gen-rpc-gen-user-client:
+
+.PHONY: gen-user
+gen-user:
 	@cd  rpc_gen && \
-	cwgo client -I ../idl \
-	--type rpc  \
-	--module github.com/lgxyc/gomall/rpc_gen \
-	--service user \
-	--idl ../idl/user.proto
-	
-.PHONY: gen-rpc-gen_user-server
-gen-rpc-gen-user-server:
+	cwgo client --type rpc \
+	-I ../idl \
+	--idl ../idl/user.proto \
+	--module ${REPO}/rpc_gen \
+	--service user 
 	@cd app/user && \
 	cwgo server --type rpc \
-	--idl ../../idl/user.proto \
-	--service user \
-	--module github.com/lgxyc/gomall/app/user \
 	-I ../../idl \
-	--pass "-use github.com/lgxyc/gomall/rpc_gen/kitex_gen"
+	--idl ../../idl/user.proto \
+	--module ${REPO}/app/user \
+	--service user \
+	--pass "-use ${REPO}/rpc_gen/kitex_gen"
 
-	
+.PHONY: gen-product
+gen-product:
+	@cd  rpc_gen && \
+	cwgo client --type rpc \
+	-I ../idl \
+	--idl ../idl/product.proto \
+	--module ${REPO}/rpc_gen \
+	--service product 
+	@cd app/product && \
+	cwgo server --type rpc \
+	-I ../../idl \
+	--idl ../../idl/product.proto \
+	--module ${REPO}/app/product \
+	--service product \
+	--pass "-use ${REPO}/rpc_gen/kitex_gen"

@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 	"errors"
+	"fmt"
 
-	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/lgxyc/gomall/app/user/biz/dal/mysql"
 	"github.com/lgxyc/gomall/app/user/biz/model"
 	user "github.com/lgxyc/gomall/rpc_gen/kitex_gen/user"
@@ -20,12 +20,15 @@ func NewRegisterService(ctx context.Context) *RegisterService {
 
 // Run create note info
 func (s *RegisterService) Run(req *user.RegisterReq) (resp *user.RegisterResp, err error) {
+	if req.Email == "" || req.Password == "" || req.PasswordConfirm == "" {
+		return nil, errors.New("password or email is empty")
+	}
 	if req.Password != req.PasswordConfirm {
 		return nil, errors.New("password not match")
 	}
 	passwordHashed, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
+	fmt.Printf("Register password=%s,hash=%s", req.Password, passwordHashed)
 	if err != nil {
-		klog.Fatal(err)
 		return nil, err
 	}
 	newUser := &model.User{
@@ -34,7 +37,6 @@ func (s *RegisterService) Run(req *user.RegisterReq) (resp *user.RegisterResp, e
 	}
 	err = model.Create(mysql.DB, newUser)
 	if err != nil {
-		klog.Fatal(err)
 		return nil, err
 	}
 
