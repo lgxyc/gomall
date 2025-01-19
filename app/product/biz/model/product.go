@@ -33,6 +33,12 @@ func (p ProductQuery) GetById(productId int32) (product Product, err error) {
 }
 
 func (p ProductQuery) SearchProcutList(q string) (productList []Product, err error) {
+	if q == "" {
+		err = p.db.WithContext(p.ctx).
+			Model(&Product{}).
+			Find(&productList).Error
+		return
+	}
 	err = p.db.WithContext(p.ctx).
 		Model(&Product{}).
 		First(&productList, "name like ? or description like ?", "%"+q+"%", "%"+q+"%").

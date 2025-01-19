@@ -8,7 +8,7 @@ import "common.proto";
 
 
 service CategoryService {
-    // 获取所有分类
+    // 获取category分类的商品
    rpc Category(CategoryReq) returns(common.Empty){
       option(api.get)="/category/:category";
    }

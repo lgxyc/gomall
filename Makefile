@@ -82,3 +82,19 @@ gen-product:
 	--module ${REPO}/app/product \
 	--service product \
 	--pass "-use ${REPO}/rpc_gen/kitex_gen"
+
+.PHONY: gen-cart
+gen-cart:
+	@cd  rpc_gen && \
+	cwgo client --type rpc \
+	-I ../idl \
+	--idl ../idl/cart.proto \
+	--module ${REPO}/rpc_gen \
+	--service cart 
+	@cd app/cart && \
+	cwgo server --type rpc \
+	-I ../../idl \
+	--idl ../../idl/cart.proto \
+	--module ${REPO}/app/cart \
+	--service cart \
+	--pass "-use ${REPO}/rpc_gen/kitex_gen"
