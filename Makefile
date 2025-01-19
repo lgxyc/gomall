@@ -34,7 +34,19 @@ gen-frontend:
 	-I ../../idl
 	@cd app/frontend && \
 	cwgo server --type HTTP \
-	--idl ../../idl/frontend/auth.proto \
+	--idl ../../idl/frontend/auth_page.proto \
+	--service frontend \
+	-module ${REPO}/app/frontend \
+	-I ../../idl
+	@cd app/frontend && \
+	cwgo server --type HTTP \
+	--idl ../../idl/frontend/product_page.proto \
+	--service frontend \
+	-module ${REPO}/app/frontend \
+	-I ../../idl
+	@cd app/frontend && \
+	cwgo server --type HTTP \
+	--idl ../../idl/frontend/category_page.proto \
 	--service frontend \
 	-module ${REPO}/app/frontend \
 	-I ../../idl
@@ -42,8 +54,7 @@ gen-frontend:
 
 .PHONY: gen-user
 gen-user:
-	@cd  rpc_gen && \
-	cwgo client --type rpc \
+	@cd  rpc_gen &&  cwgo client --type rpc \
 	-I ../idl \
 	--idl ../idl/user.proto \
 	--module ${REPO}/rpc_gen \
