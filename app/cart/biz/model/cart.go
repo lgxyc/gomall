@@ -14,36 +14,33 @@ type Cart struct {
 	Qty       uint32 `gorm:"type:int(11);not null;"`
 }
 
-func (c Cart) Tablename() string {
+func (Cart) TableName() string {
 	return "cart"
 }
 
-func AddItem(ctx context.Context, db *gorm.DB, cart *Cart) error {
+func AddItem(ctx context.Context, db *gorm.DB, c *Cart) error {
 	var row Cart
 	//  先查找购物车中是否有该商品
 	err := db.WithContext(ctx).
 		Model(&Cart{}).
 		Where(&Cart{
-			UserId:    cart.UserId,
-			ProductId: cart.ProductId,
+			UserId:    c.UserId,
+			ProductId: c.ProductId,
 		}).
-		First(&row).
-		Error
-	if err != nil && err != gorm.ErrRecordNotFound {
+		First(&row).Error
+	if err != gorm.ErrRecordNotFound && err != nil {
 		return err
 	}
 	// 如果存在更新数量
 	if row.ID > 0 {
-		return db.WithContext(ctx).
+		err = db.WithContext(ctx).
 			Model(&Cart{}).
-			Where(&Cart{
-				UserId:    cart.UserId,
-				ProductId: cart.ProductId,
-			}).
-			UpdateColumn("qty", row.Qty+cart.Qty).
-			Error
+			Where(&Cart{UserId: c.UserId, ProductId: c.ProductId}).
+			UpdateColumn("qty", gorm.Expr("qty+?", c.Qty)).Error
+	} else {
+		err = db.WithContext(ctx).Model(&Cart{}).Create(c).Error
 	}
-	return db.WithContext(ctx).Create(cart).Error
+	return err
 }
 
 func ClearCart(ctx context.Context, db *gorm.DB, userId uint32) error {
@@ -56,12 +53,10 @@ func ClearCart(ctx context.Context, db *gorm.DB, userId uint32) error {
 		Error
 }
 
-func GetCartById(ctx context.Context, db *gorm.DB, userId uint32) ([]Cart, error) {
-	var carts []Cart
-	err := db.WithContext(ctx).
+func GetCartById(ctx context.Context, db *gorm.DB, userId uint32) (cartList []Cart, err error) {
+	err = db.WithContext(ctx).
 		Model(&Cart{}).
 		Where("user_id = ?", userId).
-		Find(&carts).
-		Error
-	return carts, err
+		Find(&cartList).Error
+	return cartList, err
 }

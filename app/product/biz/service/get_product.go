@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/cloudwego/kitex/pkg/kerrors"
 	"github.com/lgxyc/gomall/app/product/biz/dal/mysql"
@@ -18,6 +19,7 @@ func NewGetProductService(ctx context.Context) *GetProductService {
 
 // Run create note info
 func (s *GetProductService) Run(req *product.GetProductReq) (resp *product.GetProductResp, err error) {
+	fmt.Println("req=", req.Id)
 	if req.Id == 0 {
 		return nil, kerrors.NewGRPCBizStatusError(2004001, "product id is required")
 	}

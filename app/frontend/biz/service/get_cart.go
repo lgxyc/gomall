@@ -2,16 +2,16 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"strconv"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/common/utils"
-
 	common "github.com/lgxyc/gomall/app/frontend/hertz_gen/frontend/common"
 	"github.com/lgxyc/gomall/app/frontend/infra/rpc"
 	frontendutils "github.com/lgxyc/gomall/app/frontend/utils"
-	"github.com/lgxyc/gomall/rpc_gen/kitex_gen/cart"
-	"github.com/lgxyc/gomall/rpc_gen/kitex_gen/product"
+	rpccart "github.com/lgxyc/gomall/rpc_gen/kitex_gen/cart"
+	rpcproduct "github.com/lgxyc/gomall/rpc_gen/kitex_gen/product"
 )
 
 type GetCartService struct {
@@ -24,21 +24,22 @@ func NewGetCartService(Context context.Context, RequestContext *app.RequestConte
 }
 
 func (h *GetCartService) Run(req *common.Empty) (resp map[string]any, err error) {
-	r, err := rpc.CartClient.GetCart(h.Context, &cart.GetCartReq{
+	rpcResp, err := rpc.CartClient.GetCart(h.Context, &rpccart.GetCartReq{
 		UserId: uint32(frontendutils.GetUserIdFormCtx(h.Context)),
 	})
 	if err != nil {
 		return nil, err
 	}
-
+	fmt.Printf("%v", rpcResp)
 	var productList []map[string]string
 	var total float64
-	for _, item := range r.ItemList {
-		productResp, err := rpc.ProductClient.GetProduct(h.Context, &product.GetProductReq{
+	for _, item := range rpcResp.ItemList {
+		fmt.Println("item=" + item.String())
+		productResp, err := rpc.ProductClient.GetProduct(h.Context, &rpcproduct.GetProductReq{
 			Id: item.ProductId,
 		})
 		if err != nil {
-			return nil, err
+			continue
 		}
 		p := productResp.Product
 		productList = append(productList, map[string]string{

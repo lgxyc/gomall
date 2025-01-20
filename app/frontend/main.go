@@ -35,8 +35,6 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	// init dal
-	// dal.Init()
 	rpc.Init()
 	address := conf.GetConf().Hertz.Address
 	h := server.New(server.WithHostPorts(address))
