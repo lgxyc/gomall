@@ -8,6 +8,7 @@ import (
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 	"github.com/lgxyc/gomall/app/frontend/biz/service"
 	"github.com/lgxyc/gomall/app/frontend/biz/utils"
+	common "github.com/lgxyc/gomall/app/frontend/hertz_gen/frontend/common"
 	product "github.com/lgxyc/gomall/app/frontend/hertz_gen/frontend/product"
 )
 
@@ -28,7 +29,7 @@ func GetProduct(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	c.HTML(consts.StatusOK, "product", resp)
+	c.HTML(consts.StatusOK, "product", utils.WarpResponse(ctx, c, resp))
 }
 
 // SearchProductList .
@@ -48,5 +49,5 @@ func SearchProductList(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	c.HTML(consts.StatusOK, "search", resp)
+	c.HTML(consts.StatusOK, "search", utils.WarpResponse(ctx, c, resp))
 }

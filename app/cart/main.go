@@ -12,6 +12,7 @@ import (
 	consul "github.com/kitex-contrib/registry-consul"
 	"github.com/lgxyc/gomall/app/cart/biz/dal"
 	"github.com/lgxyc/gomall/app/cart/conf"
+	"github.com/lgxyc/gomall/app/cart/infra/rpc"
 	"github.com/lgxyc/gomall/rpc_gen/kitex_gen/cart/cartservice"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
@@ -23,6 +24,7 @@ func main() {
 		klog.Error(err.Error())
 		panic(err)
 	}
+	rpc.Init()
 	dal.Init()
 	opts := kitexInit()
 
