@@ -18,7 +18,7 @@ func NewGetCartService(ctx context.Context) *GetCartService {
 
 // Run create note info
 func (s *GetCartService) Run(req *rpccart.GetCartReq) (resp *rpccart.GetCartResp, err error) {
-	_, err = model.GetCartById(s.ctx, mysql.DB, req.GetUserId())
+	cartList, err := model.GetCartById(s.ctx, mysql.DB, req.GetUserId())
 	if err != nil {
 		return nil, kerrors.NewBizStatusError(50000, err.Error())
 	}
@@ -26,7 +26,7 @@ func (s *GetCartService) Run(req *rpccart.GetCartReq) (resp *rpccart.GetCartResp
 	for _, v := range cartList {
 		items = append(items, &rpccart.CartItem{
 			ProductId: v.ProductId,
-			Quantity:  int32(v.Qty),
+			Quantity:  v.Qty,
 		})
 	}
 	return &rpccart.GetCartResp{ItemList: items}, nil

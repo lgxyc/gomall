@@ -28,7 +28,7 @@ func (s *ListProductsService) Run(req *product.ListProductsReq) (resp *product.L
 	for _, vl := range cList {
 		for _, v := range vl.ProductList {
 			productList = append(productList, &product.Product{
-				Id:          uint32(v.ID),
+				Id:          v.ID,
 				Name:        v.Name,
 				Description: v.Description,
 				Picture:     v.Picture,

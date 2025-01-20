@@ -32,7 +32,7 @@ func (s *AddItemService) Run(req *cart.AddItemReq) (resp *cart.AddItemResp, err 
 	newcart := &model.Cart{
 		UserId:    req.UserId,
 		ProductId: req.Item.ProductId,
-		Qty:       uint32(req.Item.Quantity),
+		Qty:       req.Item.Quantity,
 	}
 	err = model.AddItem(s.ctx, mysql.DB, newcart)
 	if err != nil {

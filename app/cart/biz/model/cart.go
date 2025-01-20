@@ -9,9 +9,9 @@ import (
 
 type Cart struct {
 	gorm.Model
-	UserId    uint32 `gorm:"type:int(11); not null; index:idx_user_id"`
-	ProductId uint32 `gorm:"type:int(11);not null;"`
-	Qty       uint32 `gorm:"type:int(11);not null;"`
+	UserId    int32 `gorm:"type:int(11); not null; index:idx_user_id"`
+	ProductId int32 `gorm:"type:int(11);not null;"`
+	Qty       int32 `gorm:"type:int(11);not null;"`
 }
 
 func (Cart) TableName() string {
@@ -43,7 +43,7 @@ func AddItem(ctx context.Context, db *gorm.DB, c *Cart) error {
 	return err
 }
 
-func ClearCart(ctx context.Context, db *gorm.DB, userId uint32) error {
+func ClearCart(ctx context.Context, db *gorm.DB, userId int32) error {
 	if userId == 0 {
 		return errors.New("user id is required")
 	}
@@ -53,7 +53,7 @@ func ClearCart(ctx context.Context, db *gorm.DB, userId uint32) error {
 		Error
 }
 
-func GetCartById(ctx context.Context, db *gorm.DB, userId uint32) (cartList []Cart, err error) {
+func GetCartById(ctx context.Context, db *gorm.DB, userId int32) (cartList []Cart, err error) {
 	err = db.WithContext(ctx).
 		Model(&Cart{}).
 		Where("user_id = ?", userId).
