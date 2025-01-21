@@ -8,7 +8,6 @@ import (
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 	"github.com/lgxyc/gomall/app/frontend/biz/service"
 	"github.com/lgxyc/gomall/app/frontend/biz/utils"
-	common "github.com/lgxyc/gomall/app/frontend/hertz_gen/frontend/common"
 	product "github.com/lgxyc/gomall/app/frontend/hertz_gen/frontend/product"
 )
 

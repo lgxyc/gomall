@@ -10,13 +10,13 @@ import "common.proto";
 service CartService {
     // 购物车页面
    rpc GetCart(common.Empty) returns(common.Empty){
-      option(api.get)="/cart";
+      option(api.get) = "/cart";
    }
    rpc AddCartItem(AddCartItemReq) returns(common.Empty){
-      option(api.post)="/cart";
+      option(api.post) = "/cart";
    }
 }
 message AddCartItemReq {
-    int32 product_id = 1 [(api.form) ="poroductId"];  
-    int32 quantity = 2 [(api.form) ="poroductNum"];
+    int32 product_id = 1 [(api.form) ="productId"];  
+    int32 quantity = 2 [(api.form) ="quantity"];
 }

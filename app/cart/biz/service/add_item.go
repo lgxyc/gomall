@@ -39,5 +39,5 @@ func (s *AddItemService) Run(req *cart.AddItemReq) (resp *cart.AddItemResp, err 
 		return nil, kerrors.NewBizStatusError(5000, err.Error())
 	}
 
-	return
+	return &cart.AddItemResp{}, nil
 }

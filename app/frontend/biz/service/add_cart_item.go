@@ -21,15 +21,16 @@ func NewAddCartItemService(Context context.Context, RequestContext *app.RequestC
 }
 
 func (h *AddCartItemService) Run(req *cart.AddCartItemReq) (resp *common.Empty, err error) {
-	_, err = rpc.CartClient.AddItem(h.Context, &rpccart.AddItemReq{
-		UserId: frontendutils.GetUserIdFormCtx(h.Context),
-		Item: &rpccart.CartItem{
-			ProductId: req.ProductId,
-			Quantity:  int32(req.Quantity),
-		},
-	})
+	_, err = rpc.CartClient.AddItem(h.Context,
+		&rpccart.AddItemReq{
+			UserId: frontendutils.GetUserIdFormCtx(h.Context),
+			Item: &rpccart.CartItem{
+				ProductId: req.ProductId,
+				Quantity:  int32(req.Quantity),
+			},
+		})
 	if err != nil {
 		return nil, err
 	}
-	return &common.Empty{}, nil
+	return
 }

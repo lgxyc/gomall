@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"strconv"
 
 	"github.com/cloudwego/hertz/pkg/app"
@@ -30,11 +29,9 @@ func (h *GetCartService) Run(req *common.Empty) (resp map[string]any, err error)
 	if err != nil {
 		return nil, err
 	}
-	fmt.Printf("%v", rpcResp)
 	var productList []map[string]string
 	var total float64
-	for _, item := range rpcResp.ItemList {
-		fmt.Println("item=" + item.String())
+	for _, item := range rpcResp.Cart.Items {
 		productResp, err := rpc.ProductClient.GetProduct(h.Context, &rpcproduct.GetProductReq{
 			Id: item.ProductId,
 		})
@@ -53,7 +50,7 @@ func (h *GetCartService) Run(req *common.Empty) (resp map[string]any, err error)
 	}
 
 	return utils.H{
-		"Title":       "cart",
+		"Title":       "Cart",
 		"ProductList": productList,
 		"Total":       total,
 	}, nil

@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	"errors"
-	"fmt"
 
 	"github.com/lgxyc/gomall/app/user/biz/dal/mysql"
 	"github.com/lgxyc/gomall/app/user/biz/model"
@@ -27,7 +26,6 @@ func (s *RegisterService) Run(req *user.RegisterReq) (resp *user.RegisterResp, e
 		return nil, errors.New("password not match")
 	}
 	passwordHashed, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
-	fmt.Printf("Register password=%s,hash=%s", req.Password, passwordHashed)
 	if err != nil {
 		return nil, err
 	}
