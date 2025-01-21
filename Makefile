@@ -104,3 +104,19 @@ gen-cart:
 	--module ${REPO}/app/cart \
 	--service cart \
 	--pass "-use ${REPO}/rpc_gen/kitex_gen"
+
+.PHONY: gen-payment
+gen-payment:
+	@cd  rpc_gen && \
+	cwgo client --type rpc \
+	-I ../idl \
+	--idl ../idl/payment.proto \
+	--module ${REPO}/rpc_gen \
+	--service payment 
+	@cd app/payment && \
+	cwgo server --type rpc \
+	-I ../../idl \
+	--idl ../../idl/payment.proto \
+	--module ${REPO}/app/payment \
+	--service payment \
+	--pass "-use ${REPO}/rpc_gen/kitex_gen"

@@ -1,0 +1,36 @@
+syntax ="proto3";
+package payment;
+option go_package="/payment";
+
+service PaymentService{
+    rpc Charge(ChargeReq) returns(ChargeResp){}   
+}
+
+message CreditCardInfo{
+    // 卡号
+    string credit_card_number = 1;
+    // 有效期
+    int32 credit_card_cvv =2;
+    // 过期年份
+    int32 credit_cart_expiration_year = 3;
+    // 过期年份
+    int32 credit_cart_expiration_month = 4;
+}
+
+message ChargeReq{
+    // 交易金额
+    float amount = 1;
+    // 卡信息
+    CreditCardInfo credit_card_info = 2;
+    // 订单id
+    string order_id = 3;
+    // 用户id
+    uint32 user_id = 4;
+}
+
+message ChargeResp{
+    // 交易id
+    string transaction_id = 1;
+}
+
+
