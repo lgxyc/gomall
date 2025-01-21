@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/kitex/pkg/klog"
@@ -29,6 +30,7 @@ func (h *LoginService) Run(req *auth.LoginReq) (redirect string, err error) {
 	if err != nil {
 		return "/", err
 	}
+	fmt.Println("func loginService userId:", loginResp.UserId)
 	session := sessions.Default(h.RequestContext)
 	session.Set("user_id", loginResp.UserId)
 	if err = session.Save(); err != nil {

@@ -35,5 +35,5 @@ func (h *RegisterService) Run(req *auth.RegisterReq) (resp *common.Empty, err er
 	if err = sessions.Save(); err != nil {
 		return nil, err
 	}
-	return nil, err
+	return &common.Empty{}, nil
 }

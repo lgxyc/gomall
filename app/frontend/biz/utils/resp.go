@@ -2,9 +2,12 @@ package utils
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/lgxyc/gomall/app/frontend/infra/rpc"
 	frontendutils "github.com/lgxyc/gomall/app/frontend/utils"
+	rpccart "github.com/lgxyc/gomall/rpc_gen/kitex_gen/cart"
 )
 
 // SendErrResponse  pack error response
@@ -20,6 +23,15 @@ func SendSuccessResponse(ctx context.Context, c *app.RequestContext, code int, d
 }
 
 func WarpResponse(ctx context.Context, c *app.RequestContext, content map[string]any) map[string]any {
-	content["user_id"] = ctx.Value(frontendutils.GetUserIdFormCtx(ctx))
+	userId := frontendutils.GetUserIdFromCtx(ctx)
+	content["user_id"] = userId
+
+	fmt.Println("func WarpResponse userId:", userId)
+	if userId > 0 {
+		getCartResp, err := rpc.CartClient.GetCart(ctx, &rpccart.GetCartReq{UserId: frontendutils.GetUserIdFromCtx(ctx)})
+		if err == nil && getCartResp != nil {
+			content["cart_num"] = len(getCartResp.Cart.Items)
+		}
+	}
 	return content
 }

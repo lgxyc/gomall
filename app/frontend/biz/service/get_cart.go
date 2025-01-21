@@ -24,7 +24,7 @@ func NewGetCartService(Context context.Context, RequestContext *app.RequestConte
 
 func (h *GetCartService) Run(req *common.Empty) (resp map[string]any, err error) {
 	rpcResp, err := rpc.CartClient.GetCart(h.Context, &rpccart.GetCartReq{
-		UserId: frontendutils.GetUserIdFormCtx(h.Context),
+		UserId: frontendutils.GetUserIdFromCtx(h.Context),
 	})
 	if err != nil {
 		return nil, err
@@ -52,6 +52,6 @@ func (h *GetCartService) Run(req *common.Empty) (resp map[string]any, err error)
 	return utils.H{
 		"Title":       "Cart",
 		"ProductList": productList,
-		"Total":       total,
+		"Total":       strconv.FormatFloat(total, 'f', 2, 64),
 	}, nil
 }

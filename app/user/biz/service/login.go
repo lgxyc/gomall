@@ -19,8 +19,6 @@ func NewLoginService(ctx context.Context) *LoginService {
 
 // Run create note info
 func (s *LoginService) Run(req *user.LoginReq) (resp *user.LoginResp, err error) {
-	fmt.Println(req.String())
-
 	row, err := model.GetByEmail(mysql.DB, req.Email)
 	if err != nil {
 		return nil, err
@@ -32,5 +30,6 @@ func (s *LoginService) Run(req *user.LoginReq) (resp *user.LoginResp, err error)
 	resp = &user.LoginResp{
 		UserId: int32(row.ID),
 	}
+	fmt.Println("user serivce loginResp:", resp)
 	return resp, err
 }
