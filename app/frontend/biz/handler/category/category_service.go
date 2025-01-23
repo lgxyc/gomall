@@ -8,6 +8,7 @@ import (
 	"github.com/lgxyc/gomall/app/frontend/biz/service"
 	"github.com/lgxyc/gomall/app/frontend/biz/utils"
 	category "github.com/lgxyc/gomall/app/frontend/hertz_gen/frontend/category"
+	common "github.com/lgxyc/gomall/app/frontend/hertz_gen/frontend/common"
 )
 
 // Category .
