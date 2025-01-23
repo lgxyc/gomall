@@ -24,10 +24,12 @@ message CheckoutReq {
 }
 
 service CheckoutService {
-  rpc Checkout(CheckoutReq) returns (common.Empty) {
+  // checkout 页面
+  rpc Checkout(common.Empty) returns (common.Empty) {
     option (api.get) = "/checkout";
   }
-  rpc CheckoutWaiting(common.Empty) returns (common.Empty) {
+  // 显示表单数据,显示等待页面
+  rpc CheckoutWaiting(CheckoutReq) returns (common.Empty) {
     option (api.post) = "/checkout/waiting";
   }
   rpc CheckoutResult(common.Empty) returns (common.Empty) {

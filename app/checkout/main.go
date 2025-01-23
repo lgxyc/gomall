@@ -11,6 +11,7 @@ import (
 	kitexlogrus "github.com/kitex-contrib/obs-opentelemetry/logging/logrus"
 	consul "github.com/kitex-contrib/registry-consul"
 	"github.com/lgxyc/gomall/app/checkout/conf"
+	"github.com/lgxyc/gomall/app/checkout/infra/rpc"
 	"github.com/lgxyc/gomall/rpc_gen/kitex_gen/checkout/checkoutservice"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
@@ -22,6 +23,7 @@ func main() {
 		klog.Error(err.Error())
 		panic(err)
 	}
+	rpc.Init()
 	opts := kitexInit()
 
 	svr := checkoutservice.NewServer(new(CheckoutServiceImpl), opts...)
