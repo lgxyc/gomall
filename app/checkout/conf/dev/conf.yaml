@@ -1,0 +1,25 @@
+kitex:
+  service: "checkout"
+  address: ":8885"
+  log_level: "debug"
+  log_file_name: "log/kitex.log"
+  log_max_size: 10
+  log_max_age: 3
+  log_max_backups: 50
+
+registry:
+  registry_address:
+    - 127.0.0.1:8500
+  username: ""
+  password: ""
+
+# 为什么要从环境变量读
+# 因为后期需要用容器来部署,所以每个容器要自己读取自己的ip地址设置上去
+mysql:
+  dsn: "%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local"
+
+redis:
+  address: "127.0.0.1:6379"
+  username: ""
+  password: ""
+  db: 0

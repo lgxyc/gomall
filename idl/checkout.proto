@@ -1,0 +1,37 @@
+syntax ="proto3";
+
+package checkout;
+
+import "payment.proto";
+
+option go_package = "/checkout";
+
+
+service CheckoutService{
+    rpc Checkout(CheckoutReq) returns (CheckoutResp){}
+}
+
+message CheckoutReq{
+    int32 user_id = 1;
+    string firstname = 2;
+    string lastname = 3;
+    string email = 4;
+    Address address =5;
+    payment.CreditCardInfo credit_card = 6;
+}
+
+message Address {
+    // 街道信息
+    string street_address = 1;
+    string city = 2;
+    string state = 3;
+    string country = 4;
+    // 邮政编码
+    string zip_code = 5;
+}
+
+message CheckoutResp {
+    string order_id =1;
+    // 交易id
+    string transaction_id = 2;
+}

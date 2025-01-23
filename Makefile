@@ -120,3 +120,19 @@ gen-payment:
 	--module ${REPO}/app/payment \
 	--service payment \
 	--pass "-use ${REPO}/rpc_gen/kitex_gen"
+
+.PHONY: gen-checkout
+gen-checkout:
+	@cd  rpc_gen && \
+	cwgo client --type rpc \
+	-I ../idl \
+	--idl ../idl/checkout.proto \
+	--module ${REPO}/rpc_gen \
+	--service checkout 
+	@cd app/checkout && \
+	cwgo server --type rpc \
+	-I ../../idl \
+	--idl ../../idl/checkout.proto \
+	--module ${REPO}/app/checkout \
+	--service checkout \
+	--pass "-use ${REPO}/rpc_gen/kitex_gen"
