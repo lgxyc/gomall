@@ -113,7 +113,7 @@ func (x *ChargeReq) fastReadField2(buf []byte, _type int8) (offset int, err erro
 	if err != nil {
 		return offset, err
 	}
-	x.CreditCardInfo = &v
+	x.CreditCard = &v
 	return offset, nil
 }
 
@@ -123,7 +123,7 @@ func (x *ChargeReq) fastReadField3(buf []byte, _type int8) (offset int, err erro
 }
 
 func (x *ChargeReq) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	x.UserId, offset, err = fastpb.ReadUint32(buf, _type)
+	x.UserId, offset, err = fastpb.ReadInt32(buf, _type)
 	return offset, err
 }
 
@@ -215,10 +215,10 @@ func (x *ChargeReq) fastWriteField1(buf []byte) (offset int) {
 }
 
 func (x *ChargeReq) fastWriteField2(buf []byte) (offset int) {
-	if x.CreditCardInfo == nil {
+	if x.CreditCard == nil {
 		return offset
 	}
-	offset += fastpb.WriteMessage(buf[offset:], 2, x.GetCreditCardInfo())
+	offset += fastpb.WriteMessage(buf[offset:], 2, x.GetCreditCard())
 	return offset
 }
 
@@ -234,7 +234,7 @@ func (x *ChargeReq) fastWriteField4(buf []byte) (offset int) {
 	if x.UserId == 0 {
 		return offset
 	}
-	offset += fastpb.WriteUint32(buf[offset:], 4, x.GetUserId())
+	offset += fastpb.WriteInt32(buf[offset:], 4, x.GetUserId())
 	return offset
 }
 
@@ -317,10 +317,10 @@ func (x *ChargeReq) sizeField1() (n int) {
 }
 
 func (x *ChargeReq) sizeField2() (n int) {
-	if x.CreditCardInfo == nil {
+	if x.CreditCard == nil {
 		return n
 	}
-	n += fastpb.SizeMessage(2, x.GetCreditCardInfo())
+	n += fastpb.SizeMessage(2, x.GetCreditCard())
 	return n
 }
 
@@ -336,7 +336,7 @@ func (x *ChargeReq) sizeField4() (n int) {
 	if x.UserId == 0 {
 		return n
 	}
-	n += fastpb.SizeUint32(4, x.GetUserId())
+	n += fastpb.SizeInt32(4, x.GetUserId())
 	return n
 }
 
@@ -365,7 +365,7 @@ var fieldIDToName_CreditCardInfo = map[int32]string{
 
 var fieldIDToName_ChargeReq = map[int32]string{
 	1: "Amount",
-	2: "CreditCardInfo",
+	2: "CreditCard",
 	3: "OrderId",
 	4: "UserId",
 }

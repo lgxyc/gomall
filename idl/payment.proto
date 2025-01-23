@@ -21,11 +21,11 @@ message ChargeReq{
     // 交易金额
     float amount = 1;
     // 卡信息
-    CreditCardInfo credit_card_info = 2;
+    CreditCardInfo credit_card = 2;
     // 订单id
     string order_id = 3;
     // 用户id
-    uint32 user_id = 4;
+    int32 user_id = 4;
 }
 
 message ChargeResp{
