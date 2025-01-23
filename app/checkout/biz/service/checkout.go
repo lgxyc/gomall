@@ -6,7 +6,7 @@ import (
 	"github.com/cloudwego/kitex/pkg/kerrors"
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/google/uuid"
-	"github.com/lgxyc/gomall/app/checkout/infrac/rpc"
+	"github.com/lgxyc/gomall/app/checkout/infra/rpc"
 	rpccart "github.com/lgxyc/gomall/rpc_gen/kitex_gen/cart"
 	checkout "github.com/lgxyc/gomall/rpc_gen/kitex_gen/checkout"
 	rpccheckout "github.com/lgxyc/gomall/rpc_gen/kitex_gen/checkout"
@@ -35,7 +35,8 @@ func (s *CheckoutService) Run(req *checkout.CheckoutReq) (resp *checkout.Checkou
 
 	for _, item := range getCartResp.Cart.Items {
 		getProductResp, err := rpc.ProductClient.GetProduct(
-			s.ctx, &rpcproduct.GetProductReq{Id: item.ProductId})
+			s.ctx, &rpcproduct.GetProductReq{Id: item.ProductId},
+		)
 		if err != nil {
 			return nil, err
 		}

@@ -48,9 +48,7 @@ func ClearCart(ctx context.Context, db *gorm.DB, userId int32) error {
 		return errors.New("user id is required")
 	}
 	return db.WithContext(ctx).
-		Delete(&Cart{}).
-		Where("user_id = ?", userId).
-		Error
+		Delete(&Cart{}, "user_id = ? ", userId).Error
 }
 
 func GetCartByUserId(ctx context.Context, db *gorm.DB, userId int32) (cartList []Cart, err error) {

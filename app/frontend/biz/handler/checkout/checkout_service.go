@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/cloudwego/hertz/pkg/app"
+	hertzUtils "github.com/cloudwego/hertz/pkg/common/utils"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 	"github.com/lgxyc/gomall/app/frontend/biz/service"
 	"github.com/lgxyc/gomall/app/frontend/biz/utils"
@@ -44,7 +45,7 @@ func CheckoutWaiting(ctx context.Context, c *app.RequestContext) {
 
 	resp, err := service.NewCheckoutWaitingService(ctx, c).Run(&req)
 	if err != nil {
-		utils.SendErrResponse(ctx, c, consts.StatusOK, err)
+		c.HTML(consts.StatusOK, "waiting", utils.WarpResponse(ctx, c, hertzUtils.H{"error": err}))
 		return
 	}
 
@@ -64,7 +65,7 @@ func CheckoutResult(ctx context.Context, c *app.RequestContext) {
 
 	resp, err := service.NewCheckoutResultService(ctx, c).Run(&req)
 	if err != nil {
-		utils.SendErrResponse(ctx, c, consts.StatusOK, err)
+		c.HTML(consts.StatusOK, "waiting", utils.WarpResponse(ctx, c, hertzUtils.H{"error": err}))
 		return
 	}
 

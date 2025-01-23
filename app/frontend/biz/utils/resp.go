@@ -2,7 +2,6 @@ package utils
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/lgxyc/gomall/app/frontend/infra/rpc"
@@ -26,7 +25,6 @@ func WarpResponse(ctx context.Context, c *app.RequestContext, content map[string
 	userId := frontendutils.GetUserIdFromCtx(ctx)
 	content["user_id"] = userId
 
-	fmt.Println("func WarpResponse userId:", userId)
 	if userId > 0 {
 		getCartResp, err := rpc.CartClient.GetCart(ctx, &rpccart.GetCartReq{UserId: frontendutils.GetUserIdFromCtx(ctx)})
 		if err == nil && getCartResp != nil {
