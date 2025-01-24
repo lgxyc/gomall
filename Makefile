@@ -142,3 +142,19 @@ gen-checkout:
 	--module ${REPO}/app/checkout \
 	--service checkout \
 	--pass "-use ${REPO}/rpc_gen/kitex_gen"
+
+.PHONY: gen-order
+gen-order:
+	@cd  rpc_gen && \
+	cwgo client --type rpc \
+	-I ../idl \
+	--idl ../idl/order.proto \
+	--module ${REPO}/rpc_gen \
+	--service order 
+	@cd app/order && \
+	cwgo server --type rpc \
+	-I ../../idl \
+	--idl ../../idl/order.proto \
+	--module ${REPO}/app/order \
+	--service order \
+	--pass "-use ${REPO}/rpc_gen/kitex_gen"
