@@ -23,9 +23,9 @@ func main() {
 		klog.Error(err.Error())
 		panic(err)
 	}
+	dal.Init()
 	opts := kitexInit()
 
-	dal.Init()
 	svr := orderservice.NewServer(new(OrderServiceImpl), opts...)
 
 	err = svr.Run()
@@ -51,6 +51,8 @@ func kitexInit() (opts []server.Option) {
 	if err != nil {
 		klog.Fatal(err)
 	}
+	// 配置consul
+	opts = append(opts, server.WithRegistry(r))
 	// klog
 	logger := kitexlogrus.NewLogger()
 	klog.SetLogger(logger)

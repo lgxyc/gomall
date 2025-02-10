@@ -15,7 +15,7 @@ message Address {
   string street_address = 1;// 街道
   string city =2;
   string state = 3; // 省份
-  string contry = 4; // 国家 
+  string country = 4; // 国家 
   string zip_code = 5; // 邮政编码
 }
 
@@ -45,7 +45,7 @@ message ListOrdersReq{
 
 message Order {
   repeated OrderItem itemList = 1;
-  string oder_id = 2;
+  string order_id = 2;
   int32 user_id = 3; 
   string user_currency = 4;
   Address address = 5;

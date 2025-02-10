@@ -69,7 +69,7 @@ func (x *Address) fastReadField3(buf []byte, _type int8) (offset int, err error)
 }
 
 func (x *Address) fastReadField4(buf []byte, _type int8) (offset int, err error) {
-	x.Contry, offset, err = fastpb.ReadString(buf, _type)
+	x.Country, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -334,7 +334,7 @@ func (x *Order) fastReadField1(buf []byte, _type int8) (offset int, err error) {
 }
 
 func (x *Order) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.OderId, offset, err = fastpb.ReadString(buf, _type)
+	x.OrderId, offset, err = fastpb.ReadString(buf, _type)
 	return offset, err
 }
 
@@ -435,10 +435,10 @@ func (x *Address) fastWriteField3(buf []byte) (offset int) {
 }
 
 func (x *Address) fastWriteField4(buf []byte) (offset int) {
-	if x.Contry == "" {
+	if x.Country == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 4, x.GetContry())
+	offset += fastpb.WriteString(buf[offset:], 4, x.GetCountry())
 	return offset
 }
 
@@ -602,10 +602,10 @@ func (x *Order) fastWriteField1(buf []byte) (offset int) {
 }
 
 func (x *Order) fastWriteField2(buf []byte) (offset int) {
-	if x.OderId == "" {
+	if x.OrderId == "" {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 2, x.GetOderId())
+	offset += fastpb.WriteString(buf[offset:], 2, x.GetOrderId())
 	return offset
 }
 
@@ -704,10 +704,10 @@ func (x *Address) sizeField3() (n int) {
 }
 
 func (x *Address) sizeField4() (n int) {
-	if x.Contry == "" {
+	if x.Country == "" {
 		return n
 	}
-	n += fastpb.SizeString(4, x.GetContry())
+	n += fastpb.SizeString(4, x.GetCountry())
 	return n
 }
 
@@ -871,10 +871,10 @@ func (x *Order) sizeField1() (n int) {
 }
 
 func (x *Order) sizeField2() (n int) {
-	if x.OderId == "" {
+	if x.OrderId == "" {
 		return n
 	}
-	n += fastpb.SizeString(2, x.GetOderId())
+	n += fastpb.SizeString(2, x.GetOrderId())
 	return n
 }
 
@@ -940,7 +940,7 @@ var fieldIDToName_Address = map[int32]string{
 	1: "StreetAddress",
 	2: "City",
 	3: "State",
-	4: "Contry",
+	4: "Country",
 	5: "ZipCode",
 }
 
@@ -971,7 +971,7 @@ var fieldIDToName_ListOrdersReq = map[int32]string{
 
 var fieldIDToName_Order = map[int32]string{
 	1: "ItemList",
-	2: "OderId",
+	2: "OrderId",
 	3: "UserId",
 	4: "UserCurrency",
 	5: "Address",
